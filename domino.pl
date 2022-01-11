@@ -28,3 +28,32 @@ sort_list_of_list([],[]).
 sort_list_of_list([H|T],[H1|L3]):-
     sort(H,H1),
     sort_list_of_list(T,L3).
+
+
+rotate_list([],[]).
+rotate_list([H|T], L):-
+    append(T,[H],L).
+    
+check_variant(L1,L2):-
+    rotate_list(L1,L2).
+check_variant(L1,L2):-
+    rotate_list(L1,L3),
+    check_variant(L3,L2).
+    
+ % find better way to remove the variants?
+remove_variant(L, L3):-
+    member(H1,L),
+    member(H2,L),
+    check_variant(H1,H2),
+    delete(H2,L,L2),
+    remove_variant(L2, L3).
+
+delete(A, [A|B], B).
+delete(A, [B, C|D], [B|E]) :-
+    delete(A, [C|D], E).
+    
+
+get_all(Result):-
+    findall(L, search(L), Bag),
+    remove_variant(Bag, Result).
+    
