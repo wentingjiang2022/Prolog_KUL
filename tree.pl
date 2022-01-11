@@ -9,7 +9,7 @@ preorder(nil,[]).
 % preorder((nil-[f(a,b)]+(nil-[21,22,23]+nil))-[root,1,2]+((nil-[a]+nil)-[child,4]+nil),L).
 
 
-% part two
+% part two: try to understand why this works, make a drawing.
 
 preorder(Left-SomeList+Right, ValueList):-
     preorder_diff(Left-SomeList+Right, ValueList - []).
