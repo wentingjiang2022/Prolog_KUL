@@ -38,3 +38,6 @@ find_highest_acc([],List,_,List).
 find_highest_acc(Bag,Acc,HighestValue,List):-
     Bag = [H|T],
     sumValue(H,V),
+    V > HighestValue,
+    Acc is H,
+    find_highest_acc(T,Acc,V,List).
