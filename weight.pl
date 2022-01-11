@@ -43,7 +43,13 @@ find_highest_acc(Bag,Acc,HighestValue,List):-
     find_highest_acc(T,Acc,V,List).
     
     
-% find highest complete yet?
+% find highest
+
+solve_two(OriginalList,SumWeight,SumValue,Highest):-
+    findall(List,solve(OriginalList,SumWeight,SumValue,List),Bag),
+    remove_duplicates(Bag,Bag2),
+    find_highest(Bag2,Highest).
+
 remove_duplicates([],[]).
 remove_duplicates([H | T], List) :-    
      member(H, T),
@@ -51,22 +57,18 @@ remove_duplicates([H | T], List) :-
 remove_duplicates([H | T], [H|T1]) :- 
       \+member(H, T),
       remove_duplicates( T, T1).
+%[item(ax,50,40), item(book,50,50),item(cookie,10,5),item(laptop,99,60)]
 
-solve_two(OriginalList,W,V,List):-
-    findall(List,solve(OriginalList,W,V,List),Bag),
-    remove_duplicates(Bag,Bag2),
-    find_highest(Bag2,List).
-
-find_highest(Bag,List):-
-    find_highest_acc(Bag,[],0,List).
+find_highest(L,List):-
+    find_highest_acc(L,[],0,List).
 
 find_highest_acc([],List,_,List).
-find_highest_acc(Bag,Acc,HighestValue,List):-
-    Bag = [H|T],
+find_highest_acc([H|T],_,HighestValue,List):-
     sumValue(H,V),
     V > HighestValue,
-    Acc is H,
-    find_highest_acc(T,Acc,V,List).
+    find_highest_acc(T,H,V,List).
 
-
-
+find_highest_acc([H|T],Acc,HighestValue,List):-
+    sumValue(H,V),
+    V =< HighestValue,
+    find_highest_acc(T,Acc,HighestValue,List).
