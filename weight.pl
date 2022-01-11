@@ -1,3 +1,4 @@
+% part one
 % unfinished
 
 item(ax,50,40).
@@ -15,6 +16,7 @@ sumValue([item(_,_,V1)|T],V):-
     sumValue(T,V2),
     V is V2 + V1.
 
+% need to remove duplicates
 solve(OriginalList,SumWeight,SumValue,List):-
     append(List0, List1, OriginalList),
     (List = List0; List = List1),
@@ -22,4 +24,17 @@ solve(OriginalList,SumWeight,SumValue,List):-
     sumWeight(List, W),
     W < SumWeight,
     sumValue(List, V),
-    V < SumValue. % need to remove duplicates
+    V < SumValue. 
+
+
+% OriginalList --> [item(ax,50,40), item(book,50,50),item(cookie,10,5),item(laptop,99,60)]
+
+
+% part two
+find_highest(Bag,List):-
+    find_highest_acc(Bag,[],0,List).
+
+find_highest_acc([],List,_,List).
+find_highest_acc(Bag,Acc,HighestValue,List):-
+    Bag = [H|T],
+    sumValue(H,V),
