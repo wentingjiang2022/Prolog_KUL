@@ -1,56 +1,35 @@
 % part one
-% unfinished
 
 item(ax,50,40).
 item(book,50,50).
 item(cookie,10,5).
 item(laptop,99,60).
 
-sumWeight([],0).
-sumWeight([item(_,W1,_)|T],W):-
-    sumWeight(T,W2),
-    W is W2 + W1.
+find_set(Acc,AccW,AccV,W,V,Result):-
+    AccW < W,
+    AccV > V,
+    Result = Acc.
+find_set(Acc,AccW,AccV,W,V,Result):-
+    item(Name,ItemW,ItemV),
+    NewW is AccW + ItemW,
+    NewV is AccV + ItemV,
+    not(member(Name,Acc)),
+    find_set([Name|Acc],NewW,NewV,W,V,Result).
+
+% part two
+
+highest(Result):-
+    findall(L,find_set([],0,0,90,40,L),R),
+    find_highest(R,Result).
 
 sumValue([],0).
-sumValue([item(_,_,V1)|T],V):-
+sumValue([H|T],V3):-
+    item(H,_,V),
     sumValue(T,V2),
-    V is V2 + V1.
-
-% need to remove duplicates (done)
-solve(OriginalList,SumWeight,SumValue,List):-
-    append(List0, List1, OriginalList),
-    (List = List0; List = List1),
-    List \= [],
-    sumWeight(List, W),
-    W < SumWeight,
-    sumValue(List, V),
-    V < SumValue. 
-
-solve_one(OriginalList,SumWeight,SumValue, Solutions):-
-    findall(List,solve(OriginalList,SumWeight,SumValue,List),Bag),
-    remove_duplicates(Bag,Solutions).
-
-% OriginalList --> [item(ax,50,40), item(book,50,50),item(cookie,10,5),item(laptop,99,60)]
-
-% part two    
-% find highest
-
-solve_two(OriginalList,SumWeight,SumValue,Highest):-
-    findall(List,solve(OriginalList,SumWeight,SumValue,List),Bag),
-    remove_duplicates(Bag,Bag2),
-    find_highest(Bag2,Highest).
-
-remove_duplicates([],[]).
-remove_duplicates([H | T], List) :-    
-     member(H, T),
-     remove_duplicates( T, List).
-remove_duplicates([H | T], [H|T1]) :- 
-      \+member(H, T),
-      remove_duplicates( T, T1).
+    V3 is V + V2.
 
 find_highest(L,List):-
     find_highest_acc(L,[],0,List).
-
 find_highest_acc([],List,_,List).
 find_highest_acc([H|T],_,HighestValue,List):-
     sumValue(H,V),
@@ -61,5 +40,3 @@ find_highest_acc([H|T],Acc,HighestValue,List):-
     sumValue(H,V),
     V =< HighestValue,
     find_highest_acc(T,Acc,HighestValue,List).
-
-% query: solve_two([item(ax,50,40), item(book,50,50),item(cookie,10,5),item(laptop,99,60)], 300,200, Highest).
