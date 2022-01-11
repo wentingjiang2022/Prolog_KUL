@@ -10,11 +10,14 @@ preorder(nil,[]).
 
 
 % part two
+% not sure why it does not work 
 
-%With difference lists NOT DONE BECAUSE I DO NOT UNDERSTAND THEM
-preorder((Left-SomeList+Right), ValueList):-
-    preorder(Left,LeftList),
-    preorder(Right,RightList),
-    append([SomeList],LeftList,Temp),
-    append(Temp,RightList,ValueList).
-preorder(nil,[]).
+
+preorder(Left-[SomeList]+Right, ValueList):-
+    preorder_diff(Left-[SomeList]+Right, ValueList - []).
+
+preorder_diff(Left-[SomeList]+Right, [SomeList|A-C]-[]):-
+    preorder_diff(Left,A-B),
+    preorder_diff(Right,B-C).
+preorder_diff(nil,L-L).
+
