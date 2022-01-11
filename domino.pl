@@ -40,7 +40,7 @@ check_variant(L1,L2):-
     rotate_list(L1,L3),
     check_variant(L3,L2).
     
- % find better way to remove the variants?
+ % does not work yet, find better way to remove the variants?
 remove_variant(L, L3):-
     member(H1,L),
     member(H2,L),
