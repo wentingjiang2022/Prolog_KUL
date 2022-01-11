@@ -72,3 +72,5 @@ find_highest_acc([H|T],Acc,HighestValue,List):-
     sumValue(H,V),
     V =< HighestValue,
     find_highest_acc(T,Acc,HighestValue,List).
+
+% query: solve_two([item(ax,50,40), item(book,50,50),item(cookie,10,5),item(laptop,99,60)], 300,200, Highest).
