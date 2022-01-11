@@ -1,4 +1,4 @@
-
+%someone else's answer
 %Exercise 5 I think this exercise is not complete another page migth be missing
 % Use a list for the tour
 distance(heverlee,leuven-city-center,10).
