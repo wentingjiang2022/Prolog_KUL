@@ -2,6 +2,24 @@
 
 % remove duplicate
 
+% reverse
+
+% select
+
+% member
+
+% sort
+
+% nth element
+
+% length
+
+% append
+
+% prefix
+
+% odd,even
+
 % find subset of list
 % implemented by someone last year
 /* Without control on order */
