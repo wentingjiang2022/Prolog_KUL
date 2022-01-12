@@ -2,8 +2,18 @@
 
 % find highest value
 
-% remove duplicate
+% remove duplicate (using accumulator)
 
+remove_duplicate(L,L1):-
+    remove_duplicate_acc(L,[],L1).
+remove_duplicate_acc([],Result,Result).
+remove_duplicate_acc([H|T],Acc,L1):-
+    not(member(H,Acc)),
+    remove_duplicate_acc(T,[H|Acc],L1).
+remove_duplicate_acc([H|T],Acc,L1):-
+    member(H,Acc),
+    remove_duplicate_acc(T,Acc,L1).
+    
 % reverse
 
 % select
