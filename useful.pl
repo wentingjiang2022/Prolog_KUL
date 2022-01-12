@@ -8,6 +8,18 @@
 
 % select
 
+my_select(E,[E|T],T).
+my_select(E,[H|T],[H|E3]):-
+    my_select(E,T,E3).
+
+% create integer list from 1 to N
+
+create_integer_list(1,[1]):-!.
+create_integer_list(N,L):-
+    N1 is N-1,
+    create_integer_list(N1,L1),
+    append(L1,[N],L).
+
 % member
 my_member(H, [H|_]).
 my_member(E,[_|T]):-
