@@ -41,3 +41,27 @@ sublist2(S,L) :-
 
 append1([],X,X).
 append1([H|T1], X, [H|T2]  ) :- append1(T1,X,T2).
+
+
+% operations
+
+1). =:=.   arithmetically identical
+1+3 =:= 2+2, true,
+3 =:= 3, true (but does not make sense to use this one)
+
+2). == identical
+3 == 3, true
+a == a, true
+1+3 == 2+2, false
+
+3). =\=. arithmetically not identical
+1+3 =\= 2+2, false
+
+4). \== not identical
+a \== b, true
+
+5). @< alphabetically or arithmetically smaller
+a @< b, true
+
+
+
