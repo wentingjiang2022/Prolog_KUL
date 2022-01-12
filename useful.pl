@@ -14,7 +14,14 @@ remove_duplicate_acc([H|T],Acc,L1):-
     member(H,Acc),
     remove_duplicate_acc(T,Acc,L1).
     
-% reverse
+% reverse (this one is a bit challenging to think through)
+
+reverse(List, Reversed):-
+        reverse_acc(List, Reversed, []). % the accumulater is initial empty
+reverse_acc([], Result, Result). % Return the result (=the accumulated data)
+reverse_acc([Head|Tail], Result, Acc):-
+        reverse_acc(Tail, Result, [Head|Acc]).
+
 
 % select
 
