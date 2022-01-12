@@ -2,6 +2,14 @@
 
 % find highest value
 
+% prefix
+
+% odd,even
+
+% sort
+
+% find sublist
+
 % remove duplicate (using accumulator)
 
 remove_duplicate(L,L1):-
@@ -42,8 +50,6 @@ my_member(H, [H|_]).
 my_member(E,[_|T]):-
     my_member(E, T).
 
-% sort
-
 % nth element
 
 nth_element(1,[H|_],H).
@@ -62,9 +68,9 @@ my_append([],L,L).
 my_append([H|T],L,[H|L2]):-
     my_append(T,L,L2).
 
-% prefix
 
-% odd,even
+
+%%%%
 
 % find subset of list
 % implemented by someone last year
