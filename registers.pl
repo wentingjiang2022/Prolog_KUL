@@ -1,3 +1,77 @@
+% my solution
+
+copy(N,L,L3):-
+    length(L1,N),
+    append(L1,L2,L),
+    L2 = [_|T],
+    last(L1,E),
+    append(L1,[E|T],L3).
+
+%Gets the value in specified index
+get([H|_],1,H).
+get([_|T],N,Result):-
+    Temp is N-1,
+    get(T,Temp,Result).
+%Sets the specified value on specified index
+set([_|T],1,Element,[Element|T]).
+set([H|T],N,Element,Result):-
+    Temp is N-1,
+    set(T,Temp,Element,TempList),
+    Result = [H|TempList].
+
+swap(List,I,J,Result):-
+    get(List,I,IElement),
+    get(List,J,JElement),
+    set(List,I,JElement,Temp),
+    set(Temp,J,IElement,Result).
+
+iterative_deepening(InitialState,Trace):-
+	natural(DepthLim),
+        solve_depthlim(InitialState,DepthLim,Trace),
+        write('Nb of steps: '), write(DepthLim), nl,!.
+
+natural(1).
+natural(N) :-
+	natural(N1),
+	N is N1+1.
+
+solve_depthlim(InitialState,DepthLim,Trace) :- 
+        search_depthlim(InitialState,DepthLim,[InitialState],Trace).
+
+search_depthlim(CurrentState,_,Trace,Trace):-
+        is_solution(CurrentState).
+
+search_depthlim(CurrentState,StepsLeft,AccTrace,Trace):-
+	StepsLeft>0,
+        try_action(CurrentState,NewState),
+        no_loop(NewState,AccTrace),
+	NewStepsLeft is StepsLeft-1,
+        search_depthlim(NewState,NewStepsLeft,[NewState|AccTrace],Trace).
+
+no_loop(NewState,AccTrace) :-
+        not(member(NewState,AccTrace)).
+
+member(H,[H|_]).
+member(H,[_|T]) :-
+	member(H,T).
+ 
+is_solution([a,a,c,c,d,d]).
+
+try_action(L,L2):-
+    length(L,N1),
+    N2 is N1-1,
+    numlist(1,N2,NumList),
+    member(N, NumList),
+    copy(N,L,L2);
+    length(L,N1),
+    numlist(1,N1,NumList),
+    member(M1, NumList),
+    member(M2, NumList),
+    M1 < M2,
+    swap(L,M1,M2,L2).
+
+
+
 %someone's answer
 
 
@@ -94,94 +168,3 @@ iterativeDeepening(Depth,Registers,FinalRegisters,Result):-
     NewDepth is Depth+1,
     iterativeDeepening(NewDepth,Registers,FinalRegisters,Result).
 
-
-% my solution, a difficult one
-%[a,b,c,d]
-
-copy(N,L,L3):-
-    length(L,M),
-    length(L1,N),
-    N < M,
-    append(L1,L2,L),
-    L2 = [_|T],
-    last(L1,E),
-    append(L1,[E|T],L3).
-
-swap(As,I,J,Cs) :-
-   same_length(As,Cs),
-   append(BeforeI,[AtI|PastI],As),
-   append(BeforeI,[AtJ|PastI],Bs),
-   append(BeforeJ,[AtJ|PastJ],Bs),
-   append(BeforeJ,[AtI|PastJ],Cs),
-   length(BeforeI,I),
-   length(BeforeJ,J),
-   I < J.
-
-sequence(1,[swap]).
-sequence(1,[copy]).    
-sequence(0,[]).
-sequence(I,L):-
-    I2 is I - 1,
-    sequence(I2,L2),
-    sequence(1,Current),
-    append(Current,L2,L).
-
-operation(L,L2):-
-    swap(L,_,_,L2);
-    copy(_,L,L2).
-
-connected(start,end):-
-    swap(start,_,_,end).
-connected(start,end):-
-    copy(_,start,end).
-
-connected(start,end):-
-    operation(mid,end),
-    connected(start,mid).
-
-% my solution, not done yet
-
-
-copy(N,L,L3):-
-   % length(L,M),
-    length(L1,N),
-   % N < M,
-    append(L1,L2,L),
-    L2 = [_|T],
-    last(L1,E),
-    append(L1,[E|T],L3).
-
-swap(As,I,J,Cs) :-
-   same_length(As,Cs),
-   append(BeforeI,[AtI|PastI],As),
-   append(BeforeI,[AtJ|PastI],Bs),
-   append(BeforeJ,[AtJ|PastJ],Bs),
-   append(BeforeJ,[AtI|PastJ],Cs),
-   length(BeforeI,I),
-   length(BeforeJ,J),
-   I < J.
-
-
-solve(InitialState,Trace) :- 
-        search(InitialState,[InitialState],Trace).
-
-search(CurrentState,Trace,Trace):-
-        is_solution(CurrentState).
-
-search(CurrentState,AccTrace,Trace):-
-        try_action(CurrentState,NewState),
-        no_loop(NewState,AccTrace),
-        search(NewState,[NewState|AccTrace],Trace).
-
-no_loop(NewState,AccTrace) :-
-        not(member(NewState,AccTrace)).
- 
-is_solution([a,a,c,c]).
-
-try_action(L,L2):- 
-    swap(L,_,_,L2);
-    copy(_,L,L2).
-
-member(H,[H|_]).
-member(H,[_|T]) :-
-	member(H,T).
