@@ -9,6 +9,9 @@
 % select
 
 % member
+my_member(H, [H|_]).
+my_member(E,[_|T]):-
+    my_member(E, T).
 
 % sort
 
