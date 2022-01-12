@@ -93,3 +93,34 @@ iterativeDeepening(Depth,Registers,FinalRegisters,Result):-
     not(checkValidity(PosSequences,Registers,FinalRegisters,_)),
     NewDepth is Depth+1,
     iterativeDeepening(NewDepth,Registers,FinalRegisters,Result).
+
+
+% my solution, a difficult one
+
+%[a,b,c,d]
+
+copy(N,L,L3):-
+    length(L1,N),
+    append(L1,L2,L),
+    L2 = [_|T],
+    last(L1,E),
+    append(L1,[E|T],L3).
+
+swap(As,I,J,Cs) :-
+   same_length(As,Cs),
+   append(BeforeI,[AtI|PastI],As),
+   append(BeforeI,[AtJ|PastI],Bs),
+   append(BeforeJ,[AtJ|PastJ],Bs),
+   append(BeforeJ,[AtI|PastJ],Cs),
+   length(BeforeI,I),
+   length(BeforeJ,J).
+
+sequence(1,[swap]).
+sequence(1,[copy]).    
+sequence(0,[]).
+sequence(I,L):-
+    I2 is I - 1,
+    sequence(I2,L2),
+    sequence(1,Current),
+    append(Current,L2,L).
+    
