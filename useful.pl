@@ -13,12 +13,12 @@
 % sort
 
 % nth element
+
+% length
 mylength([],0).
 mylength([_|T],N):-
     mylength(T,N1),
     N is N1 + 1.
-
-% length
 
 % append
 my_append([],L,L).
