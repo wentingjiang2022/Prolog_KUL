@@ -50,8 +50,6 @@ findexactcovering([],_,Acc,Acc).
 
 
 % my solution, unfinished
-:-use_module(library(clpfd)).
-
 
 isCovered(I,[H|_],O):-
     member(I,H),
@@ -60,10 +58,9 @@ isCovered(I,[_|T],O):-
     isCovered(I,T,O).
 
 residual(Is,Os,I,O,Res):-
-    select(I,O,I_free),
-    intersection(I_free, Is, I_covered),
-    subtract(Is, I_covered, Res).
-
+    delete(I,O,I_free),
+    delete(I,Is,I_remaining),
+    subtract(I_remaining, I_free, Res).
 
 my_flatten(X,[X]) :- \+ is_list(X).
 my_flatten([],[]).
@@ -71,3 +68,7 @@ my_flatten([H|T],R) :-
     my_flatten(H,HFlat),
     my_flatten(T,TFlat),
     append(HFlat,TFlat,R).
+
+delete(A, [A|B], B).
+delete(A, [B, C|D], [B|E]) :-
+	    delete(A, [C|D], E).
