@@ -138,3 +138,50 @@ connected(start,end):-
 connected(start,end):-
     operation(mid,end),
     connected(start,mid).
+
+% my solution, not done yet
+
+
+copy(N,L,L3):-
+   % length(L,M),
+    length(L1,N),
+   % N < M,
+    append(L1,L2,L),
+    L2 = [_|T],
+    last(L1,E),
+    append(L1,[E|T],L3).
+
+swap(As,I,J,Cs) :-
+   same_length(As,Cs),
+   append(BeforeI,[AtI|PastI],As),
+   append(BeforeI,[AtJ|PastI],Bs),
+   append(BeforeJ,[AtJ|PastJ],Bs),
+   append(BeforeJ,[AtI|PastJ],Cs),
+   length(BeforeI,I),
+   length(BeforeJ,J),
+   I < J.
+
+
+solve(InitialState,Trace) :- 
+        search(InitialState,[InitialState],Trace).
+
+search(CurrentState,Trace,Trace):-
+        is_solution(CurrentState).
+
+search(CurrentState,AccTrace,Trace):-
+        try_action(CurrentState,NewState),
+        no_loop(NewState,AccTrace),
+        search(NewState,[NewState|AccTrace],Trace).
+
+no_loop(NewState,AccTrace) :-
+        not(member(NewState,AccTrace)).
+ 
+is_solution([a,a,c,c]).
+
+try_action(L,L2):- 
+    swap(L,_,_,L2);
+    copy(_,L,L2).
+
+member(H,[H|_]).
+member(H,[_|T]) :-
+	member(H,T).
