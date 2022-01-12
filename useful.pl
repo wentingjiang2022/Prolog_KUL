@@ -1,5 +1,6 @@
+# Prolog_KUL
+
 % find highest value
-example: 
 
 % remove duplicate
 
@@ -16,6 +17,9 @@ example:
 % length
 
 % append
+my_append([],L,L).
+my_append([H|T],L,[H|L2]):-
+    my_append(T,L,L2).
 
 % prefix
 
@@ -80,5 +84,4 @@ atomic([]), true
 #=< less or equal
 = match
 <==> assign a function to a variable
-
 
