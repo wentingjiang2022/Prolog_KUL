@@ -2,6 +2,18 @@
 
 % find highest value
 
+get_highest(L,Result):-
+    get_highest_acc(L,0,Result).
+    
+get_highest_acc([],Result,Result).
+get_highest_acc([H|T],Acc,Result):-
+    H >= Acc,
+    get_highest_acc(T,H,Result).
+
+get_highest_acc([H|T],Acc,Result):-
+    H < Acc,
+    get_highest_acc(T,Acc,Result).
+
 % prefix: excluding the situation where prefix is []
 
 prefix([E],[E|_]).
