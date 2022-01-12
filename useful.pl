@@ -1,5 +1,5 @@
 % find highest value
-https://github.com/wentingjiang2022/Prolog_KUL/blob/main/grade.pl
+example: 
 
 % remove duplicate
 
