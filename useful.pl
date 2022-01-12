@@ -13,6 +13,13 @@ prefix([H1|T1],[H1|T2]):-
 % sort
 
 % find sublist (not preserving the order)
+% not finished yet
+sublist([E],List):-
+    member(E,List).
+sublist([H|T],List):-
+    select(H, List, List2),
+    sublist(T, List2).
+
 
 % find sublist (preserving the order)
 
