@@ -1,7 +1,6 @@
 # Prolog_KUL
 
 % find highest value
-example: 
 
 % remove duplicate
 
