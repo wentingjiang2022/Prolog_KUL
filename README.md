@@ -17,6 +17,9 @@
 % length
 
 % append
+my_append([],L,L).
+my_append([H|T],L,[H|L2]):-
+    my_append(T,L,L2).
 
 % prefix
 
