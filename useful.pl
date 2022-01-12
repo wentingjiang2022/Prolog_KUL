@@ -12,7 +12,14 @@ prefix([H1|T1],[H1|T2]):-
 
 % sort
 
-% find sublist
+% find sublist (not preserving the order)
+
+% find sublist (preserving the order)
+
+sublist(L1,L2):-
+    prefix(L1,L2).
+sublist(L1,[_|T]):-
+    sublist(L1,T).
 
 % remove duplicate (using accumulator)
 
