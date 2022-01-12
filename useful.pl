@@ -13,6 +13,10 @@
 % sort
 
 % nth element
+mylength([],0).
+mylength([_|T],N):-
+    mylength(T,N1),
+    N is N1 + 1.
 
 % length
 
