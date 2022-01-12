@@ -63,5 +63,13 @@ a \== b, true
 5). @< alphabetically or arithmetically smaller
 a @< b, true
 
+6). atom: constant, not including numbers
+atom(a), true
+atom(1), false
+
+7). atomic: constant, including numbers and []
+atomic(1), true
+atomic(a), true
+atomic([]), true
 
 
