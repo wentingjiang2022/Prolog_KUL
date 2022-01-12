@@ -96,11 +96,12 @@ iterativeDeepening(Depth,Registers,FinalRegisters,Result):-
 
 
 % my solution, a difficult one
-
 %[a,b,c,d]
 
 copy(N,L,L3):-
+    length(L,M),
     length(L1,N),
+    N < M,
     append(L1,L2,L),
     L2 = [_|T],
     last(L1,E),
@@ -113,7 +114,8 @@ swap(As,I,J,Cs) :-
    append(BeforeJ,[AtJ|PastJ],Bs),
    append(BeforeJ,[AtI|PastJ],Cs),
    length(BeforeI,I),
-   length(BeforeJ,J).
+   length(BeforeJ,J),
+   I < J.
 
 sequence(1,[swap]).
 sequence(1,[copy]).    
@@ -123,4 +125,16 @@ sequence(I,L):-
     sequence(I2,L2),
     sequence(1,Current),
     append(Current,L2,L).
-    
+
+operation(L,L2):-
+    swap(L,_,_,L2);
+    copy(_,L,L2).
+
+connected(start,end):-
+    swap(start,_,_,end).
+connected(start,end):-
+    copy(_,start,end).
+
+connected(start,end):-
+    operation(mid,end),
+    connected(start,mid).
