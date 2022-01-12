@@ -10,6 +10,24 @@ prefix([H1|T1],[H1|T2]):-
 
 % odd,even
 
+% swap the element
+%Gets the value in specified index
+get([H|_],1,H).
+get([_|T],N,Result):-
+    Temp is N-1,
+    get(T,Temp,Result).
+%Sets the specified value on specified index
+set([_|T],1,Element,[Element|T]).
+set([H|T],N,Element,Result):-
+    Temp is N-1,
+    set(T,Temp,Element,TempList),
+    Result = [H|TempList].
+swap(List,I,J,Result):-
+    get(List,I,IElement),
+    get(List,J,JElement),
+    set(List,I,JElement,Temp),
+    set(Temp,J,IElement,Result).
+
 % sort
 
 % find sublist (not preserving the order)
