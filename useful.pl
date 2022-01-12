@@ -2,7 +2,11 @@
 
 % find highest value
 
-% prefix
+% prefix: excluding the situation where prefix is []
+
+prefix([E],[E|_]).
+prefix([H1|T1],[H1|T2]):-
+    prefix(T1,T2).
 
 % odd,even
 
