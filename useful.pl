@@ -76,6 +76,7 @@ atomic([]), true
 8). CLP
 #= arithmetically equal
 #\= arithemticlaly not equal
+#=< less or equal
 = match
 <==> assign a function to a variable
 
