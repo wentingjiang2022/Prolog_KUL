@@ -30,6 +30,27 @@ swap(List,I,J,Result):-
 
 % sort
 
+gt(X,Y):- X > Y.
+
+merge([],L,L).
+merge(L,[],L).
+merge([H1|T1],[H2|T2],[H1|Res]):-
+        gt(H2,H1), !,
+        merge(T1,[H2|T2],Res).
+merge([H1|T1],[H2|T2],[H2|Res]):-
+        merge([H1|T1],T2,Res).
+split([],[],[]).
+split([A],[A],[]).
+split([A,B|T],[A|S1],[B|S2]):-
+        split(T,S1,S2).
+mergesort([],[]).
+mergesort([X],[X]).
+mergesort([X,Y|T],S):-
+        split([X,Y|T],L1,L2),
+        mergesort(L1,S1),
+        mergesort(L2,S2),
+        merge(S1,S2,S).
+
 % find sublist (not preserving the order)
 % not finished yet
 sublist([E],List):-
