@@ -14,6 +14,11 @@
 
 % nth element
 
+nth_element(1,[H|_],H).
+nth_element(N,[_|T],E):-
+    N1 is N - 1,
+    nth_element(N1,T,E).
+
 % length
 mylength([],0).
 mylength([_|T],N):-
