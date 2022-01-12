@@ -125,6 +125,27 @@ my_append([],L,L).
 my_append([H|T],L,[H|L2]):-
     my_append(T,L,L2).
 
+% template for the search
+solve(InitialState,Trace) :- 
+        search(InitialState,[InitialState],Trace).
+
+search(CurrentState,Trace,Trace):-
+        is_solution(CurrentState).
+
+search(CurrentState,AccTrace,Trace):-
+        try_action(CurrentState,NewState),
+        validate_state(NewState),
+        no_loop(NewState,AccTrace),
+        search(NewState,[NewState|AccTrace],Trace).
+
+no_loop(NewState,AccTrace) :-
+        not(member(NewState,AccTrace)).
+
+is_solution(t(0,0,1)). % define a value solution
+
+try_action(CurrentState,NewState):- 
+
+validate_state(NewState):-
 
 
 %%%%
