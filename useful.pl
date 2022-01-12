@@ -62,6 +62,7 @@ a \== b, true
 
 5). @< alphabetically or arithmetically smaller
 a @< b, true
+a @=< a, true
 
 6). atom: constant, not including numbers
 atom(a), true
@@ -71,5 +72,11 @@ atom(1), false
 atomic(1), true
 atomic(a), true
 atomic([]), true
+
+8). CLP
+#= arithmetically equal
+#\= arithemticlaly not equal
+= match
+<==> assign a function to a variable
 
 
