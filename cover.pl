@@ -1,4 +1,56 @@
 % exact cover problem
+
+% my answer
+% is covered predicate
+
+iscovered(I, Os, O):-
+    member(O, Os),
+    member(I, O).
+
+% the residual predicate
+% need to define subtract a list from another list
+
+residual(A,O,L,Os,R,RO):-
+    select(A, O, R1),
+    select(A, L, R2),
+    subtract(R2, R1, R),
+    filter(Os, O, RO).
+
+filter([], _, []).
+filter([H|T], O, [H|L1]):-
+    not(intersect(H,O)),
+    filter(T, O, L1).
+
+filter([H|T], O, L1):-
+    intersect(H,O),
+    filter(T, O, L1).
+
+intersect(L1,L2):-
+    member(H,L1),
+    member(H,L2).
+
+my_subtract(L, [], L).
+my_subtract(L2, [H|T], L3):-
+    select(H, L2, L4),
+    my_subtract(L4, T, L3).
+
+% search
+findexactcovering(L, Os, Result):-
+    search_acc(L, Os, [], Result),!. % need to add cut here, if no duplicated solution
+
+search_acc([H|T], Os, Acc, Result):-
+    		iscovered(H, Os, O),
+           residual(H, O, [H|T], Os, R, RO),
+           search_acc(R, RO, [O|Acc], Result).
+           
+search_acc([], _, Result, Result).
+
+% check result: findexactcovering([1,2,3,4,5],[[1,2],[3,4],[5,6],[1,5]], Result).
+
+
+
+
+
 % someone's answer
 
 
@@ -48,27 +100,3 @@ findexactcovering([H|T],Os,Acc,Result):-
     findexactcovering(NIs,NOs,[O|Acc],Result).
 findexactcovering([],_,Acc,Acc).
 
-
-% my solution, unfinished
-
-isCovered(I,[H|_],O):-
-    member(I,H),
-    O = H.
-isCovered(I,[_|T],O):-
-    isCovered(I,T,O).
-
-residual(Is,Os,I,O,Res):-
-    delete(I,O,I_free),
-    delete(I,Is,I_remaining),
-    subtract(I_remaining, I_free, Res).
-
-my_flatten(X,[X]) :- \+ is_list(X).
-my_flatten([],[]).
-my_flatten([H|T],R) :-
-    my_flatten(H,HFlat),
-    my_flatten(T,TFlat),
-    append(HFlat,TFlat,R).
-
-delete(A, [A|B], B).
-delete(A, [B, C|D], [B|E]) :-
-	    delete(A, [C|D], E).
