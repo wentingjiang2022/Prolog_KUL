@@ -1,5 +1,7 @@
 # Prolog_KUL
 
+% iterative deepening
+
 % find highest value
 
 get_highest(L,Result):-
