@@ -2,6 +2,11 @@
 
 % iterative deepening
 
+% to-do: element E occurs M times in List
+exactly(_, [], 0).
+exactly(E, [H|T], N):-
+
+
 % find highest value
 
 get_highest(L,Result):-
