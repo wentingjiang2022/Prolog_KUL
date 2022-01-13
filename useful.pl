@@ -57,6 +57,13 @@ my_subtract(L2, [H|T], L3):-
     select(H, L2, L4),
     my_subtract(L4, T, L3).
 
+% generate a random sequence based on a list
+generate([],0,_).
+generate([H|T],N,L):- % L here has to be e.g. [1,2,3,4,5]
+    select(H, L, L1),
+    N1 is N-1,
+    generate(T, N1,L1).
+    
 % sort
 
 gt(X,Y):- X > Y.
