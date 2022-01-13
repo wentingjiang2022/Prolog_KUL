@@ -40,6 +40,13 @@ swap(List,I,J,Result):-
     set(List,I,JElement,Temp),
     set(Temp,J,IElement,Result).
 
+% subtract a list from another list
+
+my_subtract(L, [], L).
+my_subtract(L2, [H|T], L3):-
+    select(H, L2, L4),
+    my_subtract(L4, T, L3).
+
 % sort
 
 gt(X,Y):- X > Y.
