@@ -16,7 +16,13 @@ permutation(L, [X|T]):-
 
 % to-do: element E occurs M times in List
 exactly(_, [], 0).
+exactly(E, [E|T], N):-
+    exactly(E, T, N1),
+    N is N1 + 1.
+
 exactly(E, [H|T], N):-
+    E \= H,
+    exactly(E, T, N).
 
 
 % find highest value
