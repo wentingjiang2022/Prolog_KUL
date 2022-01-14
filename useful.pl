@@ -9,7 +9,7 @@ not(P) :- P, !, fail ; true.
 permutation([],[]).
 
 permutation(L, [X|T]):-
-   del(X, L, L1),
+   select(X, L, L1),
    permutation(L1, T)
 
 % iterative deepening
