@@ -1,5 +1,17 @@
 # Prolog_KUL
 
+% not 
+
+not(P) :- P, !, fail ; true.
+
+% permutation
+
+permutation([],[]).
+
+permutation(L, [X|T]):-
+   del(X, L, L1),
+   permutation(L1, T)
+
 % iterative deepening
 
 % to-do: element E occurs M times in List
