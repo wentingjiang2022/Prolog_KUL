@@ -46,7 +46,15 @@ prefix([H1|T1],[H1|T2]):-
     prefix(T1,T2).
 
 % flatten a list
+myflatten([],[]).
+myflatten(X,[X]):-
+    atomic(X), 
+    X\= [].
 
+myflatten([H1|T1], L):-
+    myflatten(H1, New),
+    myflatten(T1, New2),
+    append(New, New2, L).
 
 % odd,even
 
