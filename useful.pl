@@ -113,13 +113,11 @@ mergesort([X,Y|T],S):-
         mergesort(L2,S2),
         merge(S1,S2,S).
 
-% find sublist (not preserving the order)
-% not finished yet
-sublist([E],List):-
-    member(E,List).
-sublist([H|T],List):-
-    select(H, List, List2),
-    sublist(T, List2).
+% find sublist (not preserving the order). This one is quite tricky...
+sublist( [X], XS ):-
+    member(X, XS).
+sublist( [X|XS], [X|XSS] ) :- sublist( XS, XSS ).
+sublist( [X|XS], [_|XSS] ) :- sublist( [X|XS], XSS ).
 
 
 % find sublist (preserving the order)
