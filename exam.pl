@@ -1,7 +1,7 @@
 % question 1
 
-matching, 
-domain of finite 
+matching of lists,
+finite domain
 
 % question 2
 does the predicate succeed, if yes, provide all the bindings
@@ -25,8 +25,42 @@ count_acc([H|T], L, Acc, N):-
     not(left(L, H)),
     count_acc(T, L, Acc, N).
     
-% question 4 (rotate a list such that there is only one node path which is larger, the others are smaller)
+% question 4 (question about a cycle of nodes)
 
+:-use_module(library(clpfd)).
+
+cycle(L):-
+    length(L, N), 
+    N #>= 3,
+    check(L).
+
+check(L):-
+    last(L, E),
+    append(L1, [E], L),
+    all_different(L1),
+    rotate(L1, L2),
+    subtract(L1, L2, L3), 
+    count(L3, 1).
+
+rotate([],[]).
+rotate([H|T], L):-
+    append(T, [H], L).
+        
+subtract([], [], []).
+subtract([H1|T1], [H2|T2], [H3|L1]):-
+    H3 is H1 - H2,
+    subtract(T1, T2, L1).
+
+count([], 0).
+count([H|T], N):-
+    H > 0,
+    count(T, N1),
+    N is N1 + 1.
+
+count([H|T], N):-
+    H < 0,
+    count(T, N).
+    
 % quesiton 5, couple problem
 
 
