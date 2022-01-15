@@ -110,8 +110,40 @@ all_male([H|T]):-
     male(H),
     all_male(T).
 
+transition(S1, S2, Move):-
+    action(S1, S2, Move),
+    valid_state(S2), valid_state(S1),
+    valid_elevator(Move).
+
+% this predicate is wrong
+valid_elevator(Move):-
+    not(jealousy(Move)),
+    length(Move, N),
+    N =< 2,
+    N >= 1.
+
+valid_state(S):-
+    not(jealousy(S)).
+
+action(S1,S2, Move):-
+    go_up(S1, S2,Move);
+    go_down(S1,S2,Move).
+
+go_up((down, L1, L2), (top, L3,L4), Move):-
+    append(L3, Move, L1),
+    append(L2, Move, L4).
+
+go_down((top, L1, L2), (down, L3,L4), Move):-
+    append(L1, Move, L3),
+    append(L4, Move, L2).
+
 solve(S1, S2, Moves):-
-    search(S1, 
-           
-search(S1, S2, Moves, Moves):-
-    S = (   )
+    search(S1, S2, [], Moves, []).
+
+search(S1, S2, Acc, Moves, Old_states):-
+    transition(S1, Temp, Move),
+    not(member(Temp, Old_states)),
+    search(Temp, S2, [Move|Acc], Moves, [Temp|Old_states]).    
+    
+search(S1, _, Moves, Moves,_):-
+    S1 = (_,[],_).
