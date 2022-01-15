@@ -1,5 +1,12 @@
 # Prolog_KUL
 
+% all different
+
+checkalldiff([_]).
+checkalldiff([H|T]):-
+    not(member(H, T)),
+    checkalldiff(T).
+
 % not 
 
 not(P) :- P, !, fail ; true.
