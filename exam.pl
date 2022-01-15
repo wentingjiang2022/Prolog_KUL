@@ -63,4 +63,55 @@ count([H|T], N):-
     
 % quesiton 5, couple problem
 
+couple(J, M).
+couple(X, Y).
+couple(D,Z).
 
+male(J).
+male(X).
+male(D).
+
+female(M).
+female(Y).
+female(Z).
+
+same_state(S1, S2):-
+    S1 = (E1, E2, E3),
+    S2 = (E4, E5, E6),
+    E1 = E4,
+    permutation(E2,E5),
+    permutation(E3,E6).
+
+permutation([],[]).
+
+permutation(L, [X|T]):-
+   select(X, L, L1),
+   permutation(L1, T).
+
+jealousy([E]).
+jealousy(L):-
+    all_female(L);
+    all_male(L).
+
+jealousy(L):-
+    member(F, L),
+    couple(M, F),
+    member(M, L).
+
+all_female([E]):-
+    female(E).
+all_female([H|T]):-
+    female(H),
+    all_female(T).
+
+all_male([E]):-
+    male(E).
+all_male([H|T]):-
+    male(H),
+    all_male(T).
+
+solve(S1, S2, Moves):-
+    search(S1, 
+           
+search(S1, S2, Moves, Moves):-
+    S = (   )
