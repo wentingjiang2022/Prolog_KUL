@@ -61,7 +61,7 @@ count([H|T], N):-
     H < 0,
     count(T, N).
     
-% quesiton 5, couple problem
+% quesiton 5, couple problem 
 
 couple(J, M).
 couple(X, Y).
