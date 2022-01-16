@@ -1,12 +1,11 @@
-% question 1
+% question 1 
+matching in list, and a question about domain
 
-matching of lists,
-finite domain
-
-% question 2
+% question 2 
 does the predicate succeed, if yes, provide all the bindings
 
-% question 3
+% question 3: a special property is defined for a kind of element in a list, that every elements before this one is smaller. Count such number of elements in list.
+(don't remember the exact questions)
 
 left([H|_], H).
 left([E|T], H):-
@@ -25,7 +24,8 @@ count_acc([H|T], L, Acc, N):-
     not(left(L, H)),
     count_acc(T, L, Acc, N).
     
-% question 4 (question about a cycle of nodes)
+% question 4: question about a cycle of nodes, for a list of nodes [A,B,D,...A] which always ends with the same node and the rest of nodes being all different,
+the pattern should hold that for every subsequent pair, the former node is smaller than than latter, except for one pair.
 
 :-use_module(library(clpfd)).
 
@@ -61,7 +61,10 @@ count([H|T], N):-
     H < 0,
     count(T, N).
     
-% quesiton 5, couple problem 
+% quesiton 5, couple problem, a group of people going from down to top via elevators. need to satisfy the constraint that the couple has to be together if there is a another man. 
+elevator always has to have a person inside, max number is 2.
+
+%THE FOLLOWING ANSWER IS INCOMPLETE/INCORRECT
 
 couple(j, m).
 couple(x, y).
