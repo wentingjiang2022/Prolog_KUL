@@ -63,17 +63,15 @@ count([H|T], N):-
     
 % quesiton 5, couple problem 
 
-couple(J, M).
-couple(X, Y).
-couple(D,Z).
-
-male(J).
-male(X).
-male(D).
-
-female(M).
-female(Y).
-female(Z).
+couple(j, m).
+couple(x, y).
+couple(d,z).
+male(j).
+male(x).
+male(d).
+female(m).
+female(y).
+female(z).
 
 same_state(S1, S2):-
     S1 = (E1, E2, E3),
@@ -88,12 +86,12 @@ permutation(L, [X|T]):-
    select(X, L, L1),
    permutation(L1, T).
 
-jealousy([E]).
-jealousy(L):-
+not_jealousy([_]).
+not_jealousy(L):-
     all_female(L);
     all_male(L).
 
-jealousy(L):-
+not_jealousy(L):-
     member(F, L),
     couple(M, F),
     member(M, L).
@@ -113,32 +111,35 @@ all_male([H|T]):-
 transition(S1, S2, Move):-
     action(S1, S2, Move),
     valid_state(S2), valid_state(S1),
-    valid_elevator(Move).
-
-% this predicate is wrong
-valid_elevator(Move):-
-    not(jealousy(Move)),
-    length(Move, N),
-    N =< 2,
-    N >= 1.
+    valid_state(Move).
 
 valid_state(S):-
-    not(jealousy(S)).
+    not(not_jealousy(S)).
 
 action(S1,S2, Move):-
     go_up(S1, S2,Move);
     go_down(S1,S2,Move).
 
 go_up((down, L1, L2), (top, L3,L4), Move):-
+    length(Move, N),
+    N >= 1, 
+    N =< 2, 
     append(L3, Move, L1),
-    append(L2, Move, L4).
+    append(L2, Move, L4), 
+    append(L1, L2, [j, m,x, y, d,z]),
+    append(L3, L4, [j, m,x, y, d,z]).
 
 go_down((top, L1, L2), (down, L3,L4), Move):-
+    length(Move, N),
+    N >= 1, 
+    N =< 2, 
     append(L1, Move, L3),
-    append(L4, Move, L2).
+    append(L4, Move, L2),
+    append(L1, L2, [j, m,x, y, d,z]),
+    append(L3, L4, [j, m,x, y, d,z]).
 
-solve(S1, S2, Moves):-
-    search(S1, S2, [], Moves, []).
+solve((down,[j, m,x, y, d,z],[]), S2, Moves):-
+    search((down,[j, m,x, y, d,z],[]), S2, [], Moves, []).
 
 search(S1, S2, Acc, Moves, Old_states):-
     transition(S1, Temp, Move),
@@ -146,4 +147,4 @@ search(S1, S2, Acc, Moves, Old_states):-
     search(Temp, S2, [Move|Acc], Moves, [Temp|Old_states]).    
     
 search(S1, _, Moves, Moves,_):-
-    S1 = (_,[],_).
+    S1 = (top,[],[j, m,x, y, d,z]).
